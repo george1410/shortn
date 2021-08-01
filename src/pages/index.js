@@ -1,43 +1,24 @@
 import { EditIcon } from '@chakra-ui/icons';
 import {
-  Button,
   Container,
   Flex,
   Heading,
   IconButton,
-  Input,
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
-  Tr,
-  Text,
   Tooltip,
-  FormControl,
-  FormLabel,
-  Stack,
+  Tr,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useState } from 'react';
+import CreateForm from '../components/CreateForm';
 import DeleteWithConfirm from '../components/DeleteWithConfirm';
 import Url from '../models/Url';
 
 export default function Home({ urls }) {
-  const [longUrl, setLongUrl] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log({ longUrl, shortUrl });
-    const apiResponse = await axios.post('/api/urls', {
-      originalUrl: longUrl,
-      shortUrl,
-    });
-
-    console.log(apiResponse.data);
-  };
-
   const handleDeleteButtonClick = async (shortUrl) => {
     await axios.delete(`/api/urls/${shortUrl}`);
   };
@@ -45,31 +26,7 @@ export default function Home({ urls }) {
   return (
     <Container maxWidth={1024}>
       <Heading>shortn</Heading>
-      <form onSubmit={handleSubmit}>
-        <Stack direction='horizontal' align='flex-end'>
-          <FormControl mr={3}>
-            <FormLabel>Long URL</FormLabel>
-            <Input
-              type='text'
-              placeholder='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-              value={longUrl}
-              onChange={(e) => setLongUrl(e.target.value)}
-            />
-          </FormControl>
-          <FormControl mr={3}>
-            <FormLabel>Short URL</FormLabel>
-            <Input
-              type='text'
-              placeholder='video'
-              value={shortUrl}
-              onChange={(e) => setShortUrl(e.target.value)}
-            />
-          </FormControl>
-          <Button colorScheme='blue' paddingX={8} type='submit'>
-            Submit
-          </Button>
-        </Stack>
-      </form>
+      <CreateForm />
 
       <Table mt={10} size='md'>
         <Thead>
