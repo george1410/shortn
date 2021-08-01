@@ -5,6 +5,7 @@ import {
   Input,
   Stack,
   useBreakpointValue,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -12,16 +13,38 @@ import React, { useState } from 'react';
 const CreateForm = () => {
   const [longUrl, setLongUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const resetForm = () => {
+    setLongUrl('');
+    setShortUrl('');
+  };
+
+  const toast = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log({ longUrl, shortUrl });
-    const apiResponse = await axios.post('/api/urls', {
-      originalUrl: longUrl,
-      shortUrl,
-    });
-
-    console.log(apiResponse.data);
+    try {
+      const apiResponse = await axios.post('/api/urls', {
+        originalUrl: longUrl,
+        shortUrl,
+      });
+      console.log(apiResponse.data);
+      toast({
+        title: 'Short URL Created Successfully',
+        status: 'success',
+      });
+      resetForm();
+    } catch (err) {
+      toast({
+        title: 'Something went wrong',
+        description: (
+          <>
+            We were unable to create your short URL. Please <b>try again</b>.
+          </>
+        ),
+        status: 'error',
+      });
+    }
   };
 
   return (
