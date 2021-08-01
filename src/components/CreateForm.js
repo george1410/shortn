@@ -1,24 +1,50 @@
+import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
 import {
   Button,
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
+  Tooltip,
   useBreakpointValue,
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useState } from 'react';
 
+const shortUrlRegex = /^[\w\-]+$/;
+
 const CreateForm = () => {
   const [longUrl, setLongUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const [isValidShortUrl, setIsValidShortUrl] = useState([true, null]);
+  const toast = useToast();
+
+  const handleShortUrlChange = async (value) => {
+    setShortUrl(value);
+    if (!shortUrlRegex.test(value)) {
+      setIsValidShortUrl([
+        false,
+        'This short URL contains invalid characters.',
+      ]);
+    } else {
+      try {
+        await axios.get(`http://localhost:3000/api/urls/${value}`);
+        setIsValidShortUrl([false, 'This short URL is already in use.']);
+      } catch (err) {
+        if (err.response.status === 404) {
+          setIsValidShortUrl([true, null]);
+        }
+      }
+    }
+  };
+
   const resetForm = () => {
     setLongUrl('');
     setShortUrl('');
   };
-
-  const toast = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,29 +76,41 @@ const CreateForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Stack direction={['column', 'row']} align='flex-end'>
-        <FormControl mr={[0, 3]}>
+        <FormControl>
           <FormLabel>Long URL</FormLabel>
           <Input
-            type='text'
+            type='url'
             placeholder='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
           />
         </FormControl>
-        <FormControl mr={(0, 3)}>
+        <FormControl isInvalid={!isValidShortUrl[0] && shortUrl !== ''}>
           <FormLabel>Short URL</FormLabel>
-          <Input
-            type='text'
-            placeholder='video'
-            value={shortUrl}
-            onChange={(e) => setShortUrl(e.target.value)}
-          />
+          <InputGroup>
+            <Input
+              type='text'
+              placeholder='video'
+              value={shortUrl}
+              onChange={async (e) => await handleShortUrlChange(e.target.value)}
+            />
+            <InputRightElement>
+              {isValidShortUrl[0]
+                ? shortUrl !== '' && <CheckCircleIcon color='green' />
+                : shortUrl !== '' && (
+                    <Tooltip label={isValidShortUrl[1]}>
+                      <WarningIcon color='red' />
+                    </Tooltip>
+                  )}
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
         <Button
           colorScheme='blue'
           paddingX={8}
           type='submit'
           isFullWidth={useBreakpointValue([true, false])}
+          isDisabled={!isValidShortUrl || shortUrl === ''}
         >
           Submit
         </Button>
