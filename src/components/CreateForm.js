@@ -19,23 +19,23 @@ const shortUrlRegex = /^[\w\-]+$/;
 const CreateForm = () => {
   const [longUrl, setLongUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
-  const [isValidShortUrl, setIsValidShortUrl] = useState([true, null]);
+  const [isValidShortUrl, setIsValidShortUrl] = useState(true);
+  const [invalidShortUrlMessage, setInvalidShortUrlMessage] = useState(null);
   const toast = useToast();
 
   const handleShortUrlChange = async (value) => {
     setShortUrl(value);
     if (!shortUrlRegex.test(value)) {
-      setIsValidShortUrl([
-        false,
-        'This short URL contains invalid characters.',
-      ]);
+      setIsValidShortUrl(false);
+      setInvalidShortUrlMessage('This short URL contains invalid characters.');
     } else {
       try {
         await axios.get(`http://localhost:3000/api/urls/${value}`);
-        setIsValidShortUrl([false, 'This short URL is already in use.']);
+        setIsValidShortUrl(false);
+        setInvalidShortUrlMessage('This short URL is already in use..');
       } catch (err) {
         if (err.response.status === 404) {
-          setIsValidShortUrl([true, null]);
+          setIsValidShortUrl(true);
         }
       }
     }
@@ -44,6 +44,8 @@ const CreateForm = () => {
   const resetForm = () => {
     setLongUrl('');
     setShortUrl('');
+    setIsValidShortUrl(true);
+    setInvalidShortUrlMessage(null);
   };
 
   const handleSubmit = async (event) => {
@@ -85,7 +87,7 @@ const CreateForm = () => {
             onChange={(e) => setLongUrl(e.target.value)}
           />
         </FormControl>
-        <FormControl isInvalid={!isValidShortUrl[0] && shortUrl !== ''}>
+        <FormControl isInvalid={!isValidShortUrl && shortUrl !== ''}>
           <FormLabel>Short URL</FormLabel>
           <InputGroup>
             <Input
@@ -95,10 +97,10 @@ const CreateForm = () => {
               onChange={async (e) => await handleShortUrlChange(e.target.value)}
             />
             <InputRightElement>
-              {isValidShortUrl[0]
+              {isValidShortUrl
                 ? shortUrl !== '' && <CheckCircleIcon color='green' />
                 : shortUrl !== '' && (
-                    <Tooltip label={isValidShortUrl[1]}>
+                    <Tooltip label={invalidShortUrlMessage}>
                       <WarningIcon color='red' />
                     </Tooltip>
                   )}
