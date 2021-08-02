@@ -2,7 +2,6 @@ import { EditIcon } from '@chakra-ui/icons';
 import {
   Container,
   Flex,
-  Heading,
   IconButton,
   Table,
   Tbody,
@@ -16,6 +15,7 @@ import {
 import axios from 'axios';
 import CreateForm from '../components/CreateForm';
 import DeleteWithConfirm from '../components/DeleteWithConfirm';
+import Header from '../components/Header';
 import Url from '../models/Url';
 
 export default function Home({ urls }) {
@@ -25,7 +25,7 @@ export default function Home({ urls }) {
 
   return (
     <Container maxWidth={1024}>
-      <Heading>shortn</Heading>
+      <Header />
       <CreateForm />
 
       <Table mt={10} size='md'>
