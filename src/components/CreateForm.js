@@ -114,7 +114,7 @@ const CreateForm = () => {
           isFullWidth={useBreakpointValue([true, false])}
           isDisabled={!isValidShortUrl || shortUrl === ''}
         >
-          Submit
+          shortn
         </Button>
       </Stack>
     </form>

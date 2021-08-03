@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   IconButton,
+  Tooltip,
 } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 
@@ -44,17 +45,19 @@ const ConfirmDialog = ({ shortUrl, onConfirm, onClose, isOpen, cancelRef }) => (
   </AlertDialog>
 );
 
-const DeleteWithConfirm = ({ onConfirm, shortUrl }) => {
+const DeleteWithConfirm = ({ onConfirm, shortUrl, tooltipText }) => {
   const [confirming, setConfirming] = useState(false);
   const cancelRef = useRef();
 
   return (
     <Box>
-      <IconButton
-        colorScheme='red'
-        onClick={() => setConfirming(true)}
-        icon={<DeleteIcon />}
-      />
+      <Tooltip label={tooltipText}>
+        <IconButton
+          colorScheme='red'
+          onClick={() => setConfirming(true)}
+          icon={<DeleteIcon />}
+        />
+      </Tooltip>
       <ConfirmDialog
         isOpen={confirming}
         onConfirm={onConfirm}

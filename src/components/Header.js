@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Avatar,
+  Container,
   Flex,
   Heading,
   Menu,
@@ -14,22 +15,24 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <Flex>
-      <Heading>shortn</Heading>
-      <Spacer />
-      <Menu>
-        <MenuButton>
-          <Flex align='center'>
-            <Avatar name='George McCarron' size='sm' mr={2} />
-            <Text mr={2}>George McCarron</Text>
-            <ChevronDownIcon />
-          </Flex>
-        </MenuButton>
-        <MenuList>
-          <MenuItem>Log Out</MenuItem>
-        </MenuList>
-      </Menu>
-    </Flex>
+    <Container maxWidth={1280} marginY={5}>
+      <Flex>
+        <Heading>shortn.</Heading>
+        <Spacer />
+        <Menu>
+          <MenuButton>
+            <Flex align='center'>
+              <Avatar name='George McCarron' size='sm' mr={2} />
+              <Text mr={2}>George McCarron</Text>
+              <ChevronDownIcon />
+            </Flex>
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Log Out</MenuItem>
+          </MenuList>
+        </Menu>
+      </Flex>
+    </Container>
   );
 };
 
