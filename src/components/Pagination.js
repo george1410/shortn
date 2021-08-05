@@ -3,10 +3,9 @@ import { Button, IconButton, Stack } from '@chakra-ui/react';
 import React from 'react';
 
 const Pagination = ({ totalPages, currentPage }) => {
-  console.log(Array(totalPages));
   return (
     <Stack direction={['row']} justify='center'>
-      <IconButton icon={<ChevronLeftIcon />} />
+      {currentPage > 1 && <IconButton icon={<ChevronLeftIcon />} />}
       {Array.from(Array(totalPages).keys()).map((pageNumber) => (
         <Button
           key={pageNumber + 1}
@@ -15,7 +14,7 @@ const Pagination = ({ totalPages, currentPage }) => {
           {pageNumber + 1}
         </Button>
       ))}
-      <IconButton icon={<ChevronRightIcon />} />
+      {currentPage < totalPages && <IconButton icon={<ChevronRightIcon />} />}
     </Stack>
   );
 };
