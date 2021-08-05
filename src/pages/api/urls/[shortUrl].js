@@ -1,6 +1,12 @@
 import Url from '../../../models/Url';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const shortUrlApi = async (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    await sleep(1000);
+  }
+
   const { shortUrl } = req.query;
 
   switch (req.method) {

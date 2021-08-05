@@ -1,6 +1,12 @@
 import Url from '../../../models/Url';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const urlsApi = async (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    await sleep(1000);
+  }
+
   switch (req.method) {
     case 'POST':
       const { originalUrl, shortUrl } = req.body;
