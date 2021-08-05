@@ -10,6 +10,7 @@ import {
   MenuList,
   Spacer,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import React from 'react';
 
@@ -22,8 +23,10 @@ const Header = () => {
         <Menu>
           <MenuButton>
             <Flex align='center'>
-              <Avatar name='George McCarron' size='sm' mr={2} />
-              <Text mr={2}>George McCarron</Text>
+              <Avatar name='George McCarron' size='sm' mr={[0, 2]} />
+              {useBreakpointValue([false, true]) && (
+                <Text mr={2}>George McCarron</Text>
+              )}
               <ChevronDownIcon />
             </Flex>
           </MenuButton>
