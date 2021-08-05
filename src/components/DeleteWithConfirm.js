@@ -45,7 +45,7 @@ const ConfirmDialog = ({ shortUrl, onConfirm, onClose, isOpen, cancelRef }) => (
   </AlertDialog>
 );
 
-const DeleteWithConfirm = ({ onConfirm, shortUrl, tooltipText }) => {
+const DeleteWithConfirm = ({ onConfirm, shortUrl, tooltipText, isLoading }) => {
   const [confirming, setConfirming] = useState(false);
   const cancelRef = useRef();
 
@@ -53,6 +53,7 @@ const DeleteWithConfirm = ({ onConfirm, shortUrl, tooltipText }) => {
     <Box>
       <Tooltip label={tooltipText}>
         <IconButton
+          isLoading={isLoading}
           colorScheme='red'
           onClick={() => setConfirming(true)}
           icon={<DeleteIcon />}

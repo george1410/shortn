@@ -12,8 +12,10 @@ const PAGE_SIZE = 3;
 export default function Home({ urls: initialUrls }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [urls, setUrls] = useState(initialUrls);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   const handleChangePage = async (newPage) => {
+    setIsLoadingPage(true);
     setCurrentPage(newPage);
     const { data } = await axios.get('/api/urls', {
       params: {
@@ -23,6 +25,7 @@ export default function Home({ urls: initialUrls }) {
     });
     console.log(data);
     setUrls(data);
+    setIsLoadingPage(false);
   };
 
   return (
@@ -42,7 +45,7 @@ export default function Home({ urls: initialUrls }) {
           </Thead>
           <Tbody>
             {urls.map((url) => (
-              <TableRow key={url.shortUrl} url={url} />
+              <TableRow loading={isLoadingPage} key={url.shortUrl} url={url} />
             ))}
           </Tbody>
         </Table>
