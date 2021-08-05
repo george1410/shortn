@@ -1,6 +1,19 @@
-import { Container, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Container,
+  Flex,
+  IconButton,
+  Stack,
+  Table,
+  Tbody,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import CreateForm from '../components/CreateForm';
 import Header from '../components/Header';
+import Pagination from '../components/Pagination';
 import TableRow from '../components/TableRow';
 import Url from '../models/Url';
 
@@ -26,6 +39,8 @@ export default function Home({ urls }) {
             ))}
           </Tbody>
         </Table>
+
+        <Pagination currentPage={1} totalPages={3} />
       </Container>
     </>
   );
