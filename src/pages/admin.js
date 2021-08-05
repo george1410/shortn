@@ -35,7 +35,7 @@ export default function Home({ urls: initialUrls }) {
       <Container maxWidth={1280} mt={10}>
         <CreateForm />
 
-        <Table mt={10} size='md'>
+        <Table marginY={10} size='md'>
           <Thead>
             <Tr>
               <Th>Short URL</Th>
