@@ -23,6 +23,7 @@ const CreateForm = () => {
   const [invalidShortUrlMessage, setInvalidShortUrlMessage] = useState(null);
   const [isValidLongUrl, setIsValidLongUrl] = useState(true);
   const [invalidLongUrlMessage, setInvalidLongUrlMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const handleShortUrlChange = async (value) => {
@@ -66,10 +67,12 @@ const CreateForm = () => {
     event.preventDefault();
     console.log({ longUrl, shortUrl });
     try {
+      setIsLoading(true);
       const apiResponse = await axios.post('/api/urls', {
         originalUrl: longUrl,
         shortUrl,
       });
+      setIsLoading(false);
       console.log(apiResponse.data);
       toast({
         title: 'Short URL Created Successfully',
@@ -143,6 +146,7 @@ const CreateForm = () => {
             !isValidLongUrl ||
             longUrl === ''
           }
+          isLoading={isLoading}
         >
           shortn
         </Button>
