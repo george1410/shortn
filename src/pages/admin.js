@@ -7,10 +7,14 @@ import Pagination from '../components/Pagination';
 import TableRow from '../components/TableRow';
 import Url from '../models/Url';
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 5;
 
-export default function Home({ urls: initialUrls }) {
+export default function Home({
+  urls: initialUrls,
+  totalPages: initialTotalPages,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
   const [urls, setUrls] = useState(initialUrls);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
@@ -23,8 +27,9 @@ export default function Home({ urls: initialUrls }) {
         offset: (newPage - 1) * PAGE_SIZE,
       },
     });
-    console.log(data);
-    setUrls(data);
+    const { urls, totalPages } = data;
+    setUrls(urls);
+    setTotalPages(totalPages);
     setIsLoadingPage(false);
   };
 
@@ -52,7 +57,7 @@ export default function Home({ urls: initialUrls }) {
 
         <Pagination
           currentPage={currentPage}
-          totalPages={3}
+          totalPages={totalPages}
           onPrev={async () => await handleChangePage(currentPage - 1)}
           onNext={async () => handleChangePage(currentPage + 1)}
           onSelectPage={async (page) => await handleChangePage(page)}
@@ -66,7 +71,7 @@ export const getServerSideProps = async (context) => {
   const limit = PAGE_SIZE,
     offset = 0;
 
-  const urls = await Url.findAll({
+  const { rows: urls, count } = await Url.findAndCountAll({
     order: [['clicks', 'DESC']],
     limit,
     offset,
@@ -75,6 +80,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       urls: urls.map((url) => url.toJSON()),
+      totalPages: Math.ceil(count / PAGE_SIZE),
     },
   };
 };

@@ -19,13 +19,13 @@ const urlsApi = async (req, res) => {
     case 'GET':
       const { limit = 3, offset = 0 } = req.query;
 
-      const urls = await Url.findAll({
+      const { rows: urls, count } = await Url.findAndCountAll({
         order: [['clicks', 'DESC']],
         limit,
         offset,
       });
 
-      return res.json(urls);
+      return res.json({ urls, totalPages: Math.ceil(count / limit) });
 
     default:
       break;
