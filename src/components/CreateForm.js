@@ -5,7 +5,9 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  InputLeftAddon,
   InputRightElement,
+  Select,
   Stack,
   Tooltip,
   useBreakpointValue,
@@ -24,6 +26,7 @@ const CreateForm = () => {
   const [isValidLongUrl, setIsValidLongUrl] = useState(true);
   const [invalidLongUrlMessage, setInvalidLongUrlMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [protocol, setProtocol] = useState('https://');
   const toast = useToast();
 
   const handleShortUrlChange = async (value) => {
@@ -47,7 +50,7 @@ const CreateForm = () => {
 
   const handleLongUrlChange = async (value) => {
     setLongUrl(value);
-    const { valid, message } = validateLongUrl(value);
+    const { valid, message } = validateLongUrl(`${protocol}${value}`);
     if (!valid) {
       setIsValidLongUrl(false);
       setInvalidLongUrlMessage(message);
@@ -93,14 +96,20 @@ const CreateForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       <Stack direction={['column', 'row']} align='flex-end'>
         <FormControl>
           <FormLabel>Long URL</FormLabel>
           <InputGroup>
+            <InputLeftAddon paddingX={0}>
+              <Select onChange={(event) => setProtocol(event.target.value)}>
+                <option value='https://'>https://</option>
+                <option value='http://'>http://</option>
+              </Select>
+            </InputLeftAddon>
             <Input
               type='url'
-              placeholder='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+              placeholder='youtube.com/watch?v=dQw4w9WgXcQ'
               value={longUrl}
               onChange={(e) => handleLongUrlChange(e.target.value)}
             />
