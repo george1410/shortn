@@ -1,4 +1,4 @@
-import { Container, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { Container, Flex, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState } from 'react';
 import CreateForm from '../components/CreateForm';
@@ -55,13 +55,13 @@ export default function Home({
           </Tbody>
         </Table>
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPrev={async () => await handleChangePage(currentPage - 1)}
-          onNext={async () => handleChangePage(currentPage + 1)}
-          onSelectPage={async (page) => await handleChangePage(page)}
-        />
+        <Flex justify='center'>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onChangePage={handleChangePage}
+          />
+        </Flex>
       </Container>
     </>
   );
