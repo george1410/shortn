@@ -10,6 +10,7 @@ import {
   useToast,
   Skeleton,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import React from 'react';
 import DeleteWithConfirm from './DeleteWithConfirm';
 
