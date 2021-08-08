@@ -12,8 +12,26 @@ export default config;
 
 const template = (args) => <Pagination {...args} />;
 
-export const Primary = template.bind({});
-Primary.args = {
-  totalPages: 3,
+export const AllPagesDisplayed = template.bind({});
+AllPagesDisplayed.args = {
+  totalPages: 9,
   currentPage: 1,
+};
+
+export const PagesHiddenAtEnd = template.bind({});
+PagesHiddenAtEnd.args = {
+  totalPages: 15,
+  currentPage: 1,
+};
+
+export const PagesHiddenAtStart = template.bind({});
+PagesHiddenAtStart.args = {
+  totalPages: 15,
+  currentPage: 14,
+};
+
+export const PagesHiddenAtStartAndEnd = template.bind({});
+PagesHiddenAtStartAndEnd.args = {
+  totalPages: 15,
+  currentPage: 8,
 };
