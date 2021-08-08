@@ -19,9 +19,9 @@ export default config;
 
 const template = (args) => <TableRow {...args} />;
 
-export const Loading = template.bind({});
-Loading.args = {
-  loading: true,
+export const Default = template.bind({});
+Default.args = {
+  loading: false,
   url: {
     shortUrl: 'blog',
     originalUrl: 'https://georgemccarron.com/blog/posts/hello-world',
@@ -29,9 +29,9 @@ Loading.args = {
   },
 };
 
-export const Loaded = template.bind({});
-Loaded.args = {
-  loading: false,
+export const Loading = template.bind({});
+Loading.args = {
+  loading: true,
   url: {
     shortUrl: 'blog',
     originalUrl: 'https://georgemccarron.com/blog/posts/hello-world',
