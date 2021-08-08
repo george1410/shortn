@@ -1,4 +1,4 @@
-import { CheckCircleIcon, SpinnerIcon, WarningIcon } from '@chakra-ui/icons';
+import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
 import {
   FormControl,
   FormLabel,
@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import React, { useState } from 'react';
 import validateShortUrl from '../../lib/validateShortUrl';
+import ValidIndicator from './ValidIndicator';
 
 const ShortURLInput = ({ value, isValid, onChange }) => {
   const [invalidMessage, setInvalidMessage] = useState(null);
@@ -18,12 +19,12 @@ const ShortURLInput = ({ value, isValid, onChange }) => {
 
   const handleChange = async (value) => {
     const { valid, message } = validateShortUrl(value);
-    setIsValidationLoading(true);
     onChange({ value });
     if (!valid) {
       setInvalidMessage(message);
       onChange({ valid });
     } else {
+      setIsValidationLoading(true);
       try {
         await axios.get(`http://localhost:3000/api/urls/${value}`);
         setInvalidMessage('This short URL is already in use.');
@@ -51,14 +52,12 @@ const ShortURLInput = ({ value, isValid, onChange }) => {
         <InputRightElement>
           {isValidationLoading ? (
             <Spinner size='sm' />
-          ) : isValid ? (
-            value !== '' && <CheckCircleIcon color='green' />
           ) : (
-            value !== '' && (
-              <Tooltip label={invalidMessage}>
-                <WarningIcon color='red' />
-              </Tooltip>
-            )
+            <ValidIndicator
+              value={value}
+              isValid={isValid}
+              invalidMessage={invalidMessage}
+            />
           )}
         </InputRightElement>
       </InputGroup>

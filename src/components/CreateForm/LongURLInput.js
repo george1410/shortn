@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import validateLongUrl from '../../lib/validateLongUrl';
+import ValidIndicator from './ValidIndicator';
 
 const LongURLInput = ({ value, isValid, onChange }) => {
   const [invalidMessage, setInvalidMessage] = useState(null);
@@ -46,13 +47,11 @@ const LongURLInput = ({ value, isValid, onChange }) => {
           onChange={(e) => handleChange(e.target.value)}
         />
         <InputRightElement>
-          {isValid
-            ? value !== '' && <CheckCircleIcon color='green' />
-            : value !== '' && (
-                <Tooltip label={invalidMessage}>
-                  <WarningIcon color='red' />
-                </Tooltip>
-              )}
+          <ValidIndicator
+            value={value}
+            isValid={isValid}
+            invalidMessage={invalidMessage}
+          />
         </InputRightElement>
       </InputGroup>
     </FormControl>
