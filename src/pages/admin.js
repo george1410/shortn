@@ -40,20 +40,28 @@ export default function Home({
       <Container maxWidth={1280} mt={10}>
         <CreateForm />
 
-        <Table marginY={10} size='md'>
-          <Thead>
-            <Tr>
-              <Th>Short URL</Th>
-              <Th>Original URL</Th>
-              <Th>Clicks</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {urls.map((url) => (
-              <TableRow loading={isLoadingPage} key={url.shortUrl} url={url} />
-            ))}
-          </Tbody>
-        </Table>
+        {urls.length > 0 ? (
+          <Table marginY={10} size='md'>
+            <Thead>
+              <Tr>
+                <Th>Short URL</Th>
+                <Th>Original URL</Th>
+                <Th>Clicks</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {urls.map((url) => (
+                <TableRow
+                  loading={isLoadingPage}
+                  key={url.shortUrl}
+                  url={url}
+                />
+              ))}
+            </Tbody>
+          </Table>
+        ) : (
+          'none to display'
+        )}
 
         <Flex justify='center'>
           <Pagination

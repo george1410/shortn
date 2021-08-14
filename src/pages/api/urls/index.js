@@ -5,6 +5,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const urlsApi = async (req, res) => {
   if (process.env.NODE_ENV === 'development') {
     await sleep(1000);
+    await Url.sync();
   }
 
   switch (req.method) {
