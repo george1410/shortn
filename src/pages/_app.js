@@ -1,5 +1,5 @@
-import { ThemeProvider } from 'styled-components';
 import { ChakraProvider } from '@chakra-ui/react';
+import { ThemeProvider } from 'styled-components';
 const theme = {};
 
 function MyApp({ Component, pageProps }) {

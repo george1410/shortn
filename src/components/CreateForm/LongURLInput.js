@@ -1,4 +1,3 @@
-import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
 import {
   FormControl,
   FormLabel,
@@ -7,7 +6,6 @@ import {
   InputLeftAddon,
   InputRightElement,
   Select,
-  Tooltip,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import validateLongUrl from '../../lib/validateLongUrl';

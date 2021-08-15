@@ -18,7 +18,6 @@ const CreateForm = () => {
     setLongUrl('');
     setShortUrl('');
     setIsValidShortUrl(true);
-    setInvalidShortUrlMessage(null);
   };
 
   const handleSubmit = async (event) => {

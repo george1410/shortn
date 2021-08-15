@@ -1,14 +1,14 @@
 import { CopyIcon, EditIcon } from '@chakra-ui/icons';
 import {
-  Td,
-  Tooltip,
-  Tr,
-  Text,
   Flex,
   IconButton,
+  Skeleton,
+  Td,
+  Text,
+  Tooltip,
+  Tr,
   useClipboard,
   useToast,
-  Skeleton,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React from 'react';

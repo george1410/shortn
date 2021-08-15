@@ -1,4 +1,3 @@
-import { CheckCircleIcon, WarningIcon } from '@chakra-ui/icons';
 import {
   FormControl,
   FormLabel,
@@ -6,7 +5,6 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Tooltip,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useState } from 'react';
